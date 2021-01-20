@@ -1,0 +1,47 @@
+{
+	"Career Level": "Graduate",
+	"Date": "27-12-2020",
+	"Industries": [
+		"Computer Software",
+		"Computer Networking"
+	],
+	"Languages": [
+		{
+			"language": "English",
+			"level": "A1"
+		},
+		{
+			"language": "Hindi",
+			"level": "Native"
+		}
+	],
+	"Skills": [
+		"Web Application Development",
+		"Web Technologies",
+		"NumPy",
+		"UI/UX Development"
+	],
+	"Work_Experience": [
+		{
+			"Category": "Software Development",
+			"Role": "Back-end Developer",
+			"Experience": 1
+		},
+		{
+			"Category": "Engineering",
+			"Role": "Software Engineer",
+			"Experience": 1
+		}
+	],
+	"timestamp": "Fri Dec 25 2020 00:08:58 GMT+0530 (India Standard Time)",
+	"city": "New Delhi",
+	"country": "India",
+	"currency": "Indian Rupee",
+	"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo dolores, consequuntur earum, nulla quisquam dicta fugiat aliquam similique quod eos perspiciatis recusandae nihil molestiae aspernatur illum dolore ab odit eum.",
+	"from": 20000,
+	"job_title": "Full Stack Developer",
+	"job_url": "https://moyyn.com",
+	"othercountries": true,
+	"requirements": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo dolores, consequuntur earum, nulla quisquam dicta fugiat aliquam similique quod eos perspiciatis recusandae nihil molestiae aspernatur illum dolore ab odit eum.",
+	"to": 50000
+}
