@@ -4,9 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import config from './config/keys';
 
 import { CompanyModule } from './modules/company/company.module';
+import { JobModule } from './modules/job/job.module';
 
 @Module({
-  imports: [CompanyModule, MongooseModule.forRoot(config.mongoURI)],
+  imports: [MongooseModule.forRoot(config.mongoURI), CompanyModule, JobModule],
   controllers: [],
   providers: [],
 })

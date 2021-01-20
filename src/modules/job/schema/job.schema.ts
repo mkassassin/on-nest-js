@@ -29,5 +29,6 @@ export const JobSchema = new mongoose.Schema({
   from: Number,
   to: Number,
   otherCountries: Boolean,
+  ifDeleted: Boolean,
   timestamp: Date,
 });

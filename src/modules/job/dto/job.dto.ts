@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional, IsMongoId } from 'class-validator';
+import * as moment from 'moment';
 
 export class LanguagesDTO {
   @ApiPropertyOptional()
@@ -55,7 +56,13 @@ export class CreateJobDTO {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform((value) => new Date(value), { toClassOnly: true })
+  @Transform(
+    (value: string) =>
+      value !== '' ? moment(value, 'DD-MM-YYYY').toDate() ?? null : null,
+    {
+      toClassOnly: true,
+    },
+  )
   readonly Date: Date;
 
   @ApiPropertyOptional()
@@ -97,6 +104,10 @@ export class CreateJobDTO {
   @ApiPropertyOptional()
   @IsOptional()
   public otherCountries: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  public ifDeleted: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -132,7 +143,13 @@ export class UpdateJobDTO {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform((value) => new Date(value), { toClassOnly: true })
+  @Transform(
+    (value: string) =>
+      value !== '' ? moment(value, 'DD-MM-YYYY').toDate() ?? null : null,
+    {
+      toClassOnly: true,
+    },
+  )
   readonly Date: Date;
 
   @ApiPropertyOptional()
@@ -174,6 +191,10 @@ export class UpdateJobDTO {
   @ApiPropertyOptional()
   @IsOptional()
   public otherCountries: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  public ifDeleted: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()

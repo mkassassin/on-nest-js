@@ -1,4 +1,4 @@
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 export interface Languages {
   language: string;
@@ -30,5 +30,6 @@ export interface Job extends Document {
   from: number;
   to: number;
   otherCountries: boolean;
+  ifDeleted?: boolean;
   timestamp: Date;
 }
