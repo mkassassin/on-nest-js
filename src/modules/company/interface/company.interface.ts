@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { Job } from '../../job/interface/job.interface';
 
 export interface Company extends Document {
   _id?: string;
@@ -14,4 +15,5 @@ export interface Company extends Document {
   status?: string;
   ifDeleted?: boolean;
   timestamp: Date;
+  Jobs?: Job[];
 }

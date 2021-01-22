@@ -1,12 +1,5 @@
-import {
-  Controller,
-  Res,
-  HttpStatus,
-  Post,
-  Body,
-  NotFoundException,
-} from '@nestjs/common';
-import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { Controller, Res, HttpStatus, Post, Body, NotFoundException } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { CompanyService } from './company.service';
 import {
@@ -27,8 +20,13 @@ export class CompanyController {
   @Post('/create')
   async addCompany(@Res() res, @Body() createAboutDTO: CreateCompanyDTO) {
     const result = await this.CompanyService.create(createAboutDTO);
-    if (!result) throw new NotFoundException('unable to create the company!');
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'unable to create the company!',
+      });
     return res.status(HttpStatus.OK).json({
+      success: true,
       message: 'The company has been successfully created',
       result,
     });
@@ -38,8 +36,13 @@ export class CompanyController {
   @Post('/update')
   async company_update(@Res() res, @Body() updateCompanyDTO: UpdateCompanyDTO) {
     const result = await this.CompanyService.update(updateCompanyDTO);
-    if (!result) throw new NotFoundException('Id does not exist!');
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'Id does not exist!',
+      });
     return res.status(HttpStatus.OK).json({
+      success: true,
       message: 'Company has been successfully updated',
       result,
     });
@@ -49,17 +52,30 @@ export class CompanyController {
   @Post('/find')
   async findById(@Res() res, @Body() objectIdDTO: ObjectIdDTO) {
     const result = await this.CompanyService.findById(objectIdDTO);
-    if (!result) throw new NotFoundException('Id does not exist!');
-    return res.status(HttpStatus.OK).json(result);
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'Id does not exist!',
+      });
+    return res.status(HttpStatus.OK).json({
+      success: true,
+      message: 'Company details successfully found',
+      result,
+    });
   }
 
   // ---------------------------------------------------------------------------------------------------------------------------
   @Post('/delete')
   async delete(@Res() res, @Body() deleteCompanyDTO: DeleteCompanyDTO) {
     const result = await this.CompanyService.delete(deleteCompanyDTO);
-    if (!result) throw new NotFoundException('Id does not exist!');
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'Id does not exist!',
+      });
     return res.status(HttpStatus.OK).json({
-      message: 'Account successfully removed',
+      success: true,
+      message: 'Company successfully removed',
     });
   }
 
@@ -67,32 +83,61 @@ export class CompanyController {
   @Post('/login')
   async loginValidate(@Res() res, @Body() companyLoginDTO: CompanyLoginDTO) {
     const result = await this.CompanyService.loginValidate(companyLoginDTO);
-    if (!result) throw new NotFoundException('Email or password is invalid!');
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'Email or password is invalid!',
+      });
     delete result.password;
-    return res.status(HttpStatus.OK).json(result);
+    return res.status(HttpStatus.OK).json({
+      success: true,
+      message: 'Login details successfully verified',
+      result,
+    });
   }
 
   // ---------------------------------------------------------------------------------------------------------------------------
   @Post('/updatePassword')
   async updatePassword(@Res() res, @Body() passwordResetDTO: PasswordResetDTO) {
     const result = await this.CompanyService.updatePassword(passwordResetDTO);
-    if (!result) throw new NotFoundException('Id does not exist!');
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'Id does not exist!',
+      });
     return res.status(HttpStatus.OK).json({
+      success: true,
       message: 'Password has been successfully updated',
     });
   }
 
   // ---------------------------------------------------------------------------------------------------------------------------
-  @Post('/updateNotification')
-  async updateNotification(
-    @Res() res,
-    @Body() notificationStatusDTO: NotificationStatusDTO,
-  ) {
-    const result = await this.CompanyService.updateNotification(
-      notificationStatusDTO,
-    );
-    if (!result) throw new NotFoundException('Id does not exist');
+  @Post('/checkNotification')
+  async checkNotification(@Res() res, @Body() objectIdDTO: ObjectIdDTO) {
+    const result = await this.CompanyService.checkNotification(objectIdDTO);
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'Id does not exist!',
+      });
     return res.status(HttpStatus.OK).json({
+      success: true,
+      message: 'Company notification status successfully found',
+      result,
+    });
+  }
+
+  // ---------------------------------------------------------------------------------------------------------------------------
+  @Post('/updateNotification')
+  async updateNotification(@Res() res, @Body() notificationStatusDTO: NotificationStatusDTO) {
+    const result = await this.CompanyService.updateNotification(notificationStatusDTO);
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'Id does not exist!',
+      });
+    return res.status(HttpStatus.OK).json({
+      success: true,
       message: 'Notification status has been updated',
     });
   }

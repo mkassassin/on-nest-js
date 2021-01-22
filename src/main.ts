@@ -1,10 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 
-import {
-  ValidationPipe,
-  ValidationError,
-  BadRequestException,
-} from '@nestjs/common';
+import { ValidationPipe, ValidationError, BadRequestException } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -19,9 +15,7 @@ async function bootstrap() {
       exceptionFactory: (validationErrors: ValidationError[] = []) => {
         const errResponse = validationErrors.map((error) => {
           const constraintsArr = Object.keys(error.constraints);
-          const errorMessage = constraintsArr.map(
-            (errKey) => error.constraints[errKey],
-          );
+          const errorMessage = constraintsArr.map((errKey) => error.constraints[errKey]);
           const newErr = {
             property: error.property,
             message: errorMessage,

@@ -16,6 +16,8 @@ export interface Job extends Document {
   company: string;
   jobTitle: string;
   jobUrl: string;
+  jobCodeUnique: number;
+  jobCode: string;
   requirements: string;
   description: string;
   careerLevel: string;

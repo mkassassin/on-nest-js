@@ -1,21 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import * as mongoose from 'mongoose';
 import { Transform } from 'class-transformer';
-import {
-  IsNotEmpty,
-  IsEmail,
-  IsEnum,
-  IsOptional,
-  IsPhoneNumber,
-  Length,
-  IsMongoId,
-} from 'class-validator';
+import { IsNotEmpty, IsEmail, IsEnum, IsOptional, IsPhoneNumber, Length, IsMongoId } from 'class-validator';
 
 import { IsCompanyEmailAlreadyExist } from './../helpers/IsCompanyEmailAlreadyExist';
 
 export enum CompanyCategory {
   PPH = 'PPH',
   Subscription = 'Subscription',
+  Free = 'Free',
 }
 
 export enum CompanyStatus {
@@ -68,8 +60,7 @@ export class CreateCompanyDTO {
   })
   @IsNotEmpty({ message: 'Please enter your Password' })
   @Length(5, 15, {
-    message:
-      'Password must be longer than or equal to 5 and less than or equal to 15 characters',
+    message: 'Password must be longer than or equal to 5 and less than or equal to 15 characters',
   })
   public password: string;
 
@@ -179,8 +170,7 @@ export class PasswordResetDTO {
   })
   @IsNotEmpty({ message: 'Please enter your new Password' })
   @Length(5, 15, {
-    message:
-      'Password must be longer than or equal to 5 and less than or equal to 15 characters',
+    message: 'Password must be longer than or equal to 5 and less than or equal to 15 characters',
   })
   public new_password: string;
 

@@ -1,10 +1,4 @@
-import {
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-  ValidationOptions,
-  registerDecorator,
-  ValidationArguments,
-} from 'class-validator';
+import { ValidatorConstraint, ValidatorConstraintInterface, ValidationOptions, registerDecorator, ValidationArguments } from 'class-validator';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Company } from '../interface/company.interface';
@@ -14,8 +8,7 @@ import { UpdateCompanyDTO } from '../dto/company.dto';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
-export class IsCompanyEmailAlreadyExistConstraint
-  implements ValidatorConstraintInterface {
+export class IsCompanyEmailAlreadyExistConstraint implements ValidatorConstraintInterface {
   constructor(
     @InjectModel('Company')
     private readonly companyModel: Model<Company>,
@@ -27,17 +20,13 @@ export class IsCompanyEmailAlreadyExistConstraint
       const DTOValue = validationArguments.object as UpdateCompanyDTO;
       findQuery['_id'] = { $ne: DTOValue._id };
     }
-    const company = await this.companyModel
-      .findOne(findQuery, { email: 1 }, {})
-      .exec();
+    const company = await this.companyModel.findOne(findQuery, { email: 1 }, {}).exec();
     if (company !== null) return false;
     return true;
   }
 }
 
-export function IsCompanyEmailAlreadyExist(
-  validationOptions?: ValidationOptions,
-) {
+export function IsCompanyEmailAlreadyExist(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
       target: object.constructor,

@@ -2,5 +2,7 @@
    "eslint.codeAction.disableRuleComment": {
       "enable": false
    },
-	"editor.tabSize": 2
+  "editor.tabSize": 2,
+  "prettier.printWidth": 146,
+  "files.eol":"\n"
 }

@@ -4,6 +4,8 @@ export const JobSchema = new mongoose.Schema({
   company: { type: mongoose.Types.ObjectId, ref: 'Company' },
   jobTitle: String,
   jobUrl: String,
+  jobCodeUnique: Number,
+  jobCode: String,
   requirements: String,
   description: String,
   careerLevel: String,

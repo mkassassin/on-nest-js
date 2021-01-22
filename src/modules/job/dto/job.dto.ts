@@ -42,6 +42,12 @@ export class CreateJobDTO {
   @IsOptional()
   public jobUrl: string;
 
+  @IsOptional()
+  public jobCodeUnique: number;
+
+  @IsOptional()
+  public jobCode: string;
+
   @ApiPropertyOptional()
   @IsOptional()
   public requirements: string;
@@ -56,13 +62,9 @@ export class CreateJobDTO {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform(
-    (value: string) =>
-      value !== '' ? moment(value, 'DD-MM-YYYY').toDate() ?? null : null,
-    {
-      toClassOnly: true,
-    },
-  )
+  @Transform((value: string) => (value !== '' ? moment(value, 'DD-MM-YYYY').toDate() ?? null : null), {
+    toClassOnly: true,
+  })
   readonly Date: Date;
 
   @ApiPropertyOptional()
@@ -143,13 +145,9 @@ export class UpdateJobDTO {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform(
-    (value: string) =>
-      value !== '' ? moment(value, 'DD-MM-YYYY').toDate() ?? null : null,
-    {
-      toClassOnly: true,
-    },
-  )
+  @Transform((value: string) => (value !== '' ? moment(value, 'DD-MM-YYYY').toDate() ?? null : null), {
+    toClassOnly: true,
+  })
   readonly Date: Date;
 
   @ApiPropertyOptional()
@@ -199,4 +197,20 @@ export class UpdateJobDTO {
   @ApiPropertyOptional()
   @IsOptional()
   readonly timestamp: Date;
+}
+
+// ------------------------------------------------------------------------------------------------
+export class ObjectIdDTO {
+  @ApiProperty()
+  @IsMongoId({ message: 'Unique id is invalid!' })
+  @IsNotEmpty({ message: 'Company unique id is mandatory!' })
+  public _id: string;
+}
+
+// ------------------------------------------------------------------------------------------------
+export class CompanyObjectIdDTO {
+  @ApiProperty()
+  @IsMongoId({ message: 'Unique id is invalid!' })
+  @IsNotEmpty({ message: 'Company unique id is mandatory!' })
+  public company: string;
 }

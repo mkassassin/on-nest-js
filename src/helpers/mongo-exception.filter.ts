@@ -7,9 +7,8 @@ export class MongoExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     response.status(500).json({
-      statusCode: 500,
+      success: false,
       message: 'Internal server error.',
-      error: 'Internal Server Error',
     });
   }
 }
