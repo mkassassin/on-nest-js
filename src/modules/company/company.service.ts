@@ -55,7 +55,6 @@ export class CompanyService {
       result.Jobs = Jobs;
       return result;
     } else {
-      customer.Jobs = [];
       return customer;
     }
   }
