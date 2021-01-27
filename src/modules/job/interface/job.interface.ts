@@ -21,7 +21,7 @@ export interface Job extends Document {
   requirements: string;
   description: string;
   careerLevel: string;
-  Date: Date;
+  Date: Date | string;
   Industries: [string];
   Languages: Languages[];
   Skills: [string];

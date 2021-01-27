@@ -10,12 +10,28 @@ import {
   ObjectIdDTO,
   CompanyLoginDTO,
   DeleteCompanyDTO,
+  EmailDTO,
 } from './dto/company.dto';
 
 @ApiTags('company')
 @Controller('company')
 export class CompanyController {
   constructor(private readonly CompanyService: CompanyService) {}
+  // ---------------------------------------------------------------------------------------------------------------------------
+  @Post('/validateEmail')
+  async validateEmail(@Res() res, @Body() emailDTO: EmailDTO) {
+    const result = await this.CompanyService.validateEmail(emailDTO);
+    if (!result)
+      throw new NotFoundException({
+        success: false,
+        message: 'unable to validate the email!',
+      });
+    return res.status(HttpStatus.OK).json({
+      success: true,
+      message: 'The email status has successfully validated',
+      result,
+    });
+  }
   // ---------------------------------------------------------------------------------------------------------------------------
   @Post('/create')
   async addCompany(@Res() res, @Body() createAboutDTO: CreateCompanyDTO) {

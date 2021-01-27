@@ -36,12 +36,7 @@ export class CreateCompanyDTO {
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Please enter your email' })
-  @IsEmail(
-    {},
-    {
-      message: 'Please enter your email address in format:yourname@example.com',
-    },
-  )
+  @IsEmail({}, { message: 'Please enter your email address in format:yourname@example.com' })
   @IsCompanyEmailAlreadyExist({ message: 'Email $value is already exists.' })
   @Transform((value) => value.toLowerCase(), { toClassOnly: true })
   public email: string;
@@ -108,12 +103,7 @@ export class UpdateCompanyDTO {
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Please enter your email' })
-  @IsEmail(
-    {},
-    {
-      message: 'Please enter your email address in format:yourname@example.com',
-    },
-  )
+  @IsEmail({}, { message: 'Please enter your email address in format:yourname@example.com' })
   @IsCompanyEmailAlreadyExist({ message: 'Email $value is already exists.' })
   @Transform((value) => value.toLowerCase(), { toClassOnly: true })
   public email: string;
@@ -135,12 +125,7 @@ export class UpdateCompanyDTO {
 // ------------------------------------------------------------------------------------------------
 export class CompanyLoginDTO {
   @ApiProperty()
-  @IsEmail(
-    {},
-    {
-      message: 'Please enter your email address in format:yourname@example.com',
-    },
-  )
+  @IsEmail({}, { message: 'Please enter your email address in format:yourname@example.com' })
   @IsNotEmpty({ message: 'Please enter your Email' })
   @Transform((value) => value.toLowerCase(), { toClassOnly: true })
   public email: string;
@@ -213,4 +198,13 @@ export class ObjectIdDTO {
   @IsMongoId({ message: 'Unique id is invalid!' })
   @IsNotEmpty({ message: 'Company unique id is mandatory!' })
   public _id: string;
+}
+
+// ------------------------------------------------------------------------------------------------
+export class EmailDTO {
+  @ApiProperty()
+  @IsNotEmpty({ message: 'Please enter your email' })
+  @IsEmail({}, { message: 'Please enter your email address in format:yourname@example.com' })
+  @Transform((value) => value.toLowerCase(), { toClassOnly: true })
+  public email: string;
 }

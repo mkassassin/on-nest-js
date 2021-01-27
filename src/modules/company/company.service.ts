@@ -5,6 +5,7 @@ import * as CryptoJS from 'crypto-js';
 
 import { Company } from './interface/company.interface';
 import {
+  EmailDTO,
   CreateCompanyDTO,
   UpdateCompanyDTO,
   PasswordResetDTO,
@@ -18,6 +19,12 @@ import { JobService } from '../job/job.service';
 @Injectable()
 export class CompanyService {
   constructor(@InjectModel('Company') private CompanyModel: Model<Company>, private jobService: JobService) {}
+
+  async validateEmail(emailDTO: EmailDTO) {
+    const company = await this.CompanyModel.findOne({ email: emailDTO.email }, { email: 1 }, {}).exec();
+    if (company !== null) return { Availability: false };
+    return { Availability: true };
+  }
 
   async create(createCompanyDTO: CreateCompanyDTO): Promise<any> {
     createCompanyDTO.password = CryptoJS.SHA256(createCompanyDTO.password).toString(CryptoJS.enc.Hex);
@@ -86,11 +93,12 @@ export class CompanyService {
   }
 
   async updatePassword(passwordResetDTO: PasswordResetDTO): Promise<any> {
+    const encPassword = CryptoJS.SHA256(passwordResetDTO.new_password).toString(CryptoJS.enc.Hex);
     return await this.CompanyModel.updateOne(
       { _id: passwordResetDTO._id },
       {
         $set: {
-          password: passwordResetDTO.new_password,
+          password: encPassword,
           timestamp: passwordResetDTO.timestamp,
         },
       },

@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 
 import { Job } from './interface/job.interface';
 import { CompanyObjectIdDTO, CreateJobDTO, ObjectIdDTO, UpdateJobDTO } from './dto/job.dto';
+import * as moment from 'moment';
 
 @Injectable()
 export class JobService {
@@ -27,6 +28,7 @@ export class JobService {
       delete result.jobCodeUnique;
       delete result.__v;
       delete result.ifDeleted;
+      result.Date = moment(result.Date).format('DD-MM-YYYY');
     }
     return result;
   }
@@ -34,7 +36,7 @@ export class JobService {
   async update(updateJobDTO: UpdateJobDTO): Promise<any> {
     const result = await this.JobModel.updateOne({ _id: updateJobDTO._id, ifDeleted: false }, { $set: updateJobDTO }).exec();
     if (result && result.n && result.n >= 1) {
-      return await this.JobModel.findOne(
+      const data = await this.JobModel.findOne(
         { _id: updateJobDTO._id, ifDeleted: false },
         {
           jobCodeUnique: 0,
@@ -42,6 +44,8 @@ export class JobService {
           __v: 0,
         },
       ).exec();
+      const returnData: Job = JSON.parse(JSON.stringify(data));
+      returnData.Date = moment(returnData.Date).format('DD-MM-YYYY');
     } else {
       return;
     }
@@ -49,7 +53,9 @@ export class JobService {
 
   async findById(objectIdDTO: ObjectIdDTO): Promise<Job> {
     const Jobs = await this.JobModel.findOne({ _id: objectIdDTO._id, ifDeleted: false }, { ifDeleted: 0, jobCodeUnique: 0, __v: 0 }).exec();
-    return Jobs;
+    const returnData: Job = JSON.parse(JSON.stringify(Jobs));
+    returnData.Date = moment(returnData.Date).format('DD-MM-YYYY');
+    return returnData;
   }
 
   async jobsByCompany(companyObjectIdDTO: CompanyObjectIdDTO): Promise<Job[]> {
@@ -57,6 +63,11 @@ export class JobService {
       { company: companyObjectIdDTO.company, ifDeleted: false },
       { ifDeleted: 0, jobCodeUnique: 0, __v: 0 },
     ).exec();
-    return Jobs;
+    const data: Job[] = JSON.parse(JSON.stringify(Jobs));
+    const returnData = data.map((Obj: Job) => {
+      Obj.Date = moment(Obj.Date).format('DD-MM-YYYY');
+      return Obj;
+    });
+    return returnData;
   }
 }

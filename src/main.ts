@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import * as fs from 'fs';
 
 import { ValidationPipe, ValidationError, BadRequestException } from '@nestjs/common';
 import { useContainer } from 'class-validator';
@@ -9,7 +10,16 @@ import { AppModule } from './app.module';
 import { MongoExceptionFilter } from './helpers/mongo-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const keyFile = fs.readFileSync(__dirname + '/../ssl/privkey.pem');
+  const certFile = fs.readFileSync(__dirname + '/../ssl/cert.pem');
+
+  const app = await NestFactory.create(AppModule, {
+    httpsOptions: {
+      key: keyFile,
+      cert: certFile,
+    },
+  });
+
   app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
@@ -39,6 +49,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
+  await app.listen(443);
 }
 bootstrap();

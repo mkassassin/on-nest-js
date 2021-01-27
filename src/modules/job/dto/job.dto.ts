@@ -65,7 +65,7 @@ export class CreateJobDTO {
   @Transform((value: string) => (value !== '' ? moment(value, 'DD-MM-YYYY').toDate() ?? null : null), {
     toClassOnly: true,
   })
-  readonly Date: Date;
+  readonly Date: Date | string;
 
   @ApiPropertyOptional()
   @IsOptional()
